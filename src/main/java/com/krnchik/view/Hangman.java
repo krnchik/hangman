@@ -29,24 +29,34 @@ public class Hangman extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.WHITE);
+
         if (game.getCurrentAttempt() > 1)
             drawDownBeam(g2d);
+
         if (game.getCurrentAttempt() > 2)
             drawPole(g2d);
+
         if (game.getCurrentAttempt() > 3)
             drawUpBeam(g2d);
+
         if (game.getCurrentAttempt() > 4)
             drawRope(g2d);
+
         if (game.getCurrentAttempt() > 5)
             drawHead(g2d);
+
         if (game.getCurrentAttempt() > 6)
             drawBody(g2d);
+
         if (game.getCurrentAttempt() > 7)
             drawLeftLeg(g2d);
+
         if (game.getCurrentAttempt() > 8)
             drawRightLeg(g2d);
+
         if (game.getCurrentAttempt() > 9)
             drawLeftArm(g2d);
+
         if (game.getCurrentAttempt() > 10)
             drawRightArm(g2d);
     }

@@ -24,10 +24,6 @@ public class Game {
         return currentAttempt > MAX_COUNT_ATTEMPT;
     }
 
-    public void incrementAttempt() {
-        currentAttempt++;
-    }
-
     public boolean isGuessed(String old, String current) {
         return !old.equals(current);
     }
