@@ -1,6 +1,8 @@
 package com.krnchik.view;
 
 
+import com.krnchik.controller.AlphabetController;
+import com.krnchik.controller.Controller;
 import com.krnchik.model.Game;
 
 import javax.swing.*;
@@ -10,17 +12,19 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Alphabet implements ActionListener {
+public class AlphabetView implements ActionListener {
 
     private final GameField field;
     private final Game game;
+    private final Controller controller;
 
     private JPanel panel;
     private java.util.List<JButton> buttons;
 
-    public Alphabet(GameField field) {
+    public AlphabetView(GameField field) {
         this.field = field;
         this.game = field.getGame();
+        this.controller = new AlphabetController(game);
         initPanel();
     }
 
@@ -76,33 +80,47 @@ public class Alphabet implements ActionListener {
     }
 
     private void buttonAction(JButton button) {
-        String newWord = game.tryGuess(button.getText().charAt(0));
-        String oldWord = field.getWord().getText();
-        if (game.isGuessed(newWord, oldWord)) {
-            field.getWord().setText(newWord);
-            button.setBackground(Color.GREEN);
-            field.getWord().repaint();
-            if (game.isWin()) {
-                openMessage("You winner!!!");
-            }
-        } else {
-            field.getHangman().repaint();
-            button.setBackground(Color.RED);
-            if (game.isFail()) {
-                openMessage("You loser!!!");
-            }
-        }
         button.setEnabled(false);
+        if (controller.action(button.getText().charAt(0))) {
+            updateWord();
+            button.setBackground(Color.GREEN);
+            actionWin();
+        } else {
+            updateHangman();
+            button.setBackground(Color.RED);
+            actionFail();
+        }
+    }
+
+    private void updateWord() {
+        field.getWord().setText(game.getHiddenWord());
+        field.getWord().repaint();
+    }
+
+    private void updateHangman() {
+        field.getHangman().repaint();
+    }
+
+    private void actionFail() {
+        if (game.isFail()) {
+            openMessage("You loser!!!");
+        }
+    }
+
+    private void actionWin() {
+        if (game.isWin()) {
+            openMessage("You winner!!!");
+        }
     }
 
     private void openMessage(String message) {
-        int flag = JOptionPane.showConfirmDialog(null,
-                new String[] { message, " Word: " + game.getWord().getSearchWord()},
-                "Result",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
-        if (flag == 0) {
-            System.exit(0);
+        new ResultMessage(field).giveMessage(message);
+    }
+
+    public void reset() {
+        for (JButton button : buttons) {
+            button.setEnabled(true);
+            button.setBackground(Color.BLACK);
         }
     }
 

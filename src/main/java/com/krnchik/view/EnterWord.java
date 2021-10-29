@@ -98,7 +98,7 @@ public class EnterWord extends JDialog implements ActionListener, KeyListener {
 
     private void okAction() {
         try {
-            field.getGame().setWord(new String(word.getPassword()));
+            field.getGame().setSearchWord(new String(word.getPassword()));
             this.dispose();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, new String[] {

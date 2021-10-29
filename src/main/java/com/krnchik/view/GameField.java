@@ -15,14 +15,14 @@ public class GameField {
     private JFrame frame;
     private JPanel panel;
     private JPanel hangman;
-    private Alphabet alphabet;
+    private AlphabetView alphabet;
     private JLabel word;
 
 
     public GameField() {
         game = new Game();
-        EnterWord word = new EnterWord(this);
-        alphabet = new Alphabet(this);
+        new EnterWord(this);
+        alphabet = new AlphabetView(this);
         hangman = new Hangman(this);
         initFrame();
     }
@@ -56,6 +56,19 @@ public class GameField {
         word.setForeground(Color.GREEN);
         word.setSize(new Dimension(X_SIZE, Y_SIZE / 3));
         word.setOpaque(false);
+    }
+
+    public void reset() {
+        game.reset();
+        new EnterWord(this);
+        updateWord();
+        hangman.repaint();
+        alphabet.reset();
+    }
+
+    private void updateWord() {
+        word.setText(game.getHiddenWord());
+        word.repaint();
     }
 
     public JFrame getFrame() {

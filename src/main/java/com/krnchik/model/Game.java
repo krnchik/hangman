@@ -12,6 +12,10 @@ public class Game {
         this.currentAttempt = 1;
     }
 
+    public void reset() {
+        this.currentAttempt = 1;
+    }
+
     public boolean isWin() {
         return word.getHiddenWord().equals(word.getSearchWord());
     }
@@ -40,7 +44,7 @@ public class Game {
         return currentHiddenWord.replaceAll("", " ").trim();
     }
 
-    public void setWord(String word) {
+    public void setSearchWord(String word) {
         this.word.setSearchWord(word);
     }
 
