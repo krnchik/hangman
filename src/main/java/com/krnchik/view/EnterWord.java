@@ -4,10 +4,7 @@ import com.krnchik.model.WordStorage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class EnterWord extends JDialog implements ActionListener, KeyListener {
 
@@ -22,6 +19,10 @@ public class EnterWord extends JDialog implements ActionListener, KeyListener {
     public EnterWord(GameField field) {
         super(field.getFrame(), "Enter word", true);
         this.field = field;
+        init();
+    }
+
+    private void init() {
         this.setSize(X_SIZE, Y_SIZE);
         this.getContentPane().setBackground(Color.darkGray);
         this.setLocationRelativeTo(null);
@@ -29,6 +30,12 @@ public class EnterWord extends JDialog implements ActionListener, KeyListener {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         initPanel();
         this.add(panel);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
         this.setVisible(true);
     }
 
